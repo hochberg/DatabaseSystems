@@ -193,14 +193,20 @@ from customers,
         and orders.cid=customers.cid
         and customers.name='Basics';
 
-2. --not correct
-select orders.pid
-from orders,
-     customers
-     where customers.city = 'Kyoto'
-     and orders.cid=customers.cid;
+2. --correct but wasnt suppose to use subquery
+select distinct pid
+from orders
+where aid in
+(select a.aid
+from orders o,
+     customers c,
+     agents a
+     where c.city = 'Kyoto'
+     and o.cid=c.cid
+     and a.aid=o.aid)
+     
 
-     select pid
+select distinct pid
 from orders
 where aid in
 	(select aid
@@ -219,12 +225,13 @@ where cid not in
         (select cid
         from orders);
 
-4. --not correct
-select customers.name
-from customers
-    right outer join orders on
-   customers.cid != orders.cid
-        and orders.cid = customers.cid;
+4.
+
+select name
+from customers c left outer join
+	orders o
+on o.cid=c.cid
+where o.cid is null;
 
 
 5.
@@ -245,9 +252,14 @@ select distinct customers.name,
 	    agents
 		where agents.city=customers.city;
 
-7. --definitely not correct
+7.
+
 select customers.name,
-	customers.city
-	from 
-select min(cid)
-from orders
+	customers.city 
+		from customers 
+		where city in
+			(select city
+			from products 
+			group by city
+			order by sum(quantity)
+				limit 1) 
