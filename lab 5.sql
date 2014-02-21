@@ -193,7 +193,7 @@ from customers,
         and orders.cid=customers.cid
         and customers.name='Basics';
 
-2. --correct but wasnt suppose to use subquery
+2. 
 select distinct pid
 from orders
 where aid in
@@ -203,20 +203,8 @@ from orders o,
      agents a
      where c.city = 'Kyoto'
      and o.cid=c.cid
-     and a.aid=o.aid)
+     and a.aid=o.aid);
      
-
-select distinct pid
-from orders
-where aid in
-	(select aid
-	from orders
-	where cid in
-		(select cid 
-		from customers
-		where city = 'Kyoto'))
-		order by pid asc;
-
 
 3.
 select name
@@ -228,10 +216,8 @@ where cid not in
 4.
 
 select name
-from customers c left outer join
-	orders o
-on o.cid=c.cid
-where o.cid is null;
+from customers c left outer join orders o on o.cid=c.cid
+	where o.cid is null;
 
 
 5.
@@ -248,17 +234,17 @@ select distinct customers.name,
 select distinct customers.name,
 		agents.name,
 		agents.city  
-       from customers,
-	    agents
-		where agents.city=customers.city;
+                from customers,
+	             agents
+		     where agents.city=customers.city;
 
 7.
 
 select customers.name,
-	customers.city 
-		from customers 
-		where city in
-			(select city
+       customers.city 
+       from customers 
+	    where city in
+		       (select city
 			from products 
 			group by city
 			order by sum(quantity)
