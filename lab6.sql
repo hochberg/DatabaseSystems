@@ -259,6 +259,14 @@ and a.aid=o.aid
 and a.city='New York';
 
 7. 
+
+ select products.priceUSD*orders.qty*((100-customers.discount)/100) x, orders.dollars d
+ from orders,
+ customers,
+ products
+ where products.pid=orders.pid
+ and customers.cid=orders.cid
+ group by x, orders.dollars
  
  
  
