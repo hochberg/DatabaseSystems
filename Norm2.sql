@@ -115,8 +115,8 @@ INSERT INTO directors_movies (d_mID , did , mid)
 --  aid-->name, address, birthdate, hair_color,eye_color, height_inches,weight_pounds,SAG_date
 --  did-->name, address, film_school, DG_date
 --  mid-->name,year_released,dbo_sales,fbo_sales, DVD_BR_sales
---  a_mID-->aid,mid
---  d_mID-->did,mid
+--  a_mID,aid,mid-->
+--  d_mID,did,mid-->
 
 
 
